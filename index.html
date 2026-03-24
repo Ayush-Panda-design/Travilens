@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wanderlens — Travel Gallery</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ─── HEADER ─────────────────────────────────────────── -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-icon">📸</span>
+        <span class="brand-name">Travilens</span>
+      </div>
+
+      <div class="search-wrap">
+        <input
+          type="text"
+          id="searchInput"
+          class="search-input"
+          placeholder="Search a destination…"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button id="searchBtn" class="search-btn" aria-label="Search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </button>
+      </div>
+
+      <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+        <span class="toggle-icon sun">☀</span>
+        <span class="toggle-icon moon">☽</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ─── MAIN ───────────────────────────────────────────── -->
+  <main class="main-content">
+
+    <!-- HERO / SPLASH shown before first search -->
+    <section id="heroSection" class="hero-section">
+      <div class="hero-inner">
+        <p class="hero-eyebrow">Explore the world, one frame at a time</p>
+        <h1 class="hero-title">Chase your next<br/><em>horizon</em></h1>
+        <p class="hero-sub">Type any destination above to begin your visual journey.</p>
+      </div>
+      <div class="hero-deco" aria-hidden="true">
+        <span>Paris</span><span>Kyoto</span><span>Santorini</span>
+        <span>Patagonia</span><span>Marrakech</span><span>Bali</span>
+      </div>
+    </section>
+
+    <!-- LOADING SPINNER -->
+    <div id="spinner" class="spinner-wrap hidden" aria-live="polite" aria-label="Loading">
+      <div class="spinner"></div>
+      <p class="spinner-label">Fetching images…</p>
+    </div>
+
+    <!-- ERROR MESSAGE -->
+    <div id="errorMsg" class="error-msg hidden" role="alert"></div>
+
+    <!-- GALLERY SECTION -->
+    <section id="gallerySection" class="gallery-section hidden">
+
+      <div class="gallery-header">
+        <h2 id="galleryTitle" class="gallery-title"></h2>
+        <div class="gallery-actions">
+          <button id="copyLocationBtn" class="action-btn" title="Copy destination name">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            </svg>
+            Copy
+          </button>
+          <button id="favBtn" class="action-btn fav-btn" title="Add to Favorites">
+            <span id="favIcon">♡</span> Favorite
+          </button>
+        </div>
+      </div>
+
+      <!-- Main image viewer -->
+      <div class="main-viewer">
+        <button id="prevBtn" class="nav-btn prev-btn" aria-label="Previous image">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </button>
+
+        <div class="main-image-wrap">
+          <img id="mainImage" class="main-image" src="" alt="" />
+          <div id="imageOverlay" class="image-overlay">
+            <div class="overlay-credit">
+              <span id="creditText"></span>
+            </div>
+            <button id="copyImgBtn" class="copy-img-btn" title="Copy image URL">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+              Copy link
+            </button>
+          </div>
+        </div>
+
+        <button id="nextBtn" class="nav-btn next-btn" aria-label="Next image">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Thumbnail strip -->
+      <div class="thumb-strip-wrap">
+        <div id="thumbStrip" class="thumb-strip"></div>
+      </div>
+
+    </section>
+
+    <!-- ─── RECENT SEARCHES ──────────────────────────────── -->
+    <section id="recentSection" class="panel-section hidden">
+      <h3 class="panel-title">
+        <span class="panel-icon">◷</span> Recent Searches
+        <button id="clearHistoryBtn" class="clear-btn">Clear</button>
+      </h3>
+      <div id="recentTags" class="tag-list"></div>
+    </section>
+
+    <!-- ─── FAVORITES ────────────────────────────────────── -->
+    <section id="favSection" class="panel-section hidden">
+      <h3 class="panel-title">
+        <span class="panel-icon">♡</span> Favorites
+      </h3>
+      <div id="favGrid" class="fav-grid"></div>
+    </section>
+
+  </main>
+
+  <!-- ─── FOOTER ────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <p>Travilens — Your visual gateway to the world · </p>
+  <div id="toast" class="toast hidden">Copied!</div>
+
+  <script src="script.js"></script>
+</body>
+</html>
